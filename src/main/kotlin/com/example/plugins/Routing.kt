@@ -1,15 +1,17 @@
 package com.example.plugins
 
-import com.example.models.customerStorage
-import io.ktor.http.*
+import com.example.routes.customerRouting
+import com.example.routes.getOrdersRoute
+import com.example.routes.listOrdersRoute
+import com.example.routes.totalizeOrderRoute
 import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
-
-    // Starting point for a Ktor app:
     routing {
-
+        customerRouting()
+        listOrdersRoute()
+        getOrdersRoute()
+        totalizeOrderRoute()
     }
 }

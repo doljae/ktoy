@@ -2,6 +2,7 @@ package com.example
 
 import com.example.plugins.configureRouting
 import com.example.plugins.configureSerialization
+import com.example.plugins.configureTemplating
 import io.ktor.server.application.*
 
 //fun main() {
@@ -18,4 +19,5 @@ fun Application.module() {
 //    install(Routing)
     configureRouting()
     configureSerialization()
+    configureTemplating()
 }

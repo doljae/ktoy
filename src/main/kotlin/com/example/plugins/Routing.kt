@@ -5,6 +5,7 @@ import com.example.routes.getOrdersRoute
 import com.example.routes.listOrdersRoute
 import com.example.routes.totalizeOrderRoute
 import io.ktor.server.application.*
+import io.ktor.server.http.content.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
@@ -13,5 +14,9 @@ fun Application.configureRouting() {
         listOrdersRoute()
         getOrdersRoute()
         totalizeOrderRoute()
+
+        static("/static") {
+            resources("files")
+        }
     }
 }

@@ -23,6 +23,12 @@ fun Application.configureRouting() {
         static("/static") {
             resources("files")
         }
+        route("articles") {
+            get {
+                call.respond(FreeMarkerContent("index.ftl",null))
+            }
+        }
+
 
         get {
             call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to dao.allArticles())))

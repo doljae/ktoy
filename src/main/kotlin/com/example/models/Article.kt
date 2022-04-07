@@ -1,8 +1,15 @@
 package com.example.models
 
 import org.jetbrains.exposed.sql.Table
+import java.util.concurrent.atomic.AtomicInteger
 
-data class Article(val id: Int, val title: String, val body: String)
+data class Article(val id: Int, val title: String, val body: String) {
+    companion object {
+        private val idCounter = AtomicInteger()
+
+        fun newEntry(title: String, body: String) = Article(idCounter.getAndIncrement(), title, body)
+    }
+}
 
 object Articles : Table() {
     val id = integer("id").autoIncrement()

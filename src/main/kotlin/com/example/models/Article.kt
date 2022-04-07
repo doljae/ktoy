@@ -3,7 +3,7 @@ package com.example.models
 import org.jetbrains.exposed.sql.Table
 import java.util.concurrent.atomic.AtomicInteger
 
-data class Article(val id: Int, val title: String, val body: String) {
+data class Article(val id: Int, var title: String, var body: String) {
     companion object {
         private val idCounter = AtomicInteger()
 

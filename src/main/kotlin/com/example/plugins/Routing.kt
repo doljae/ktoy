@@ -44,6 +44,27 @@ fun Application.configureRouting() {
                 val id = call.parameters.getOrFail<Int>("id").toInt()
                 call.respond(FreeMarkerContent("show.ftl", mapOf("article" to articles.find { it.id == id })))
             }
+            get("{id}/edit") {
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                call.respond(FreeMarkerContent("edit.ftl", mapOf("article" to articles.find { it.id == id })))
+            }
+            post("{id}") {
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                val formParameters = call.receiveParameters()
+                when (formParameters.getOrFail("_action")) {
+                    "update" -> {
+                        val title = formParameters.getOrFail("title")
+                        val body = formParameters.getOrFail("body")
+                        articles[id].title = title
+                        articles[id].body = body
+                        call.respondRedirect("/articles/$id")
+                    }
+                    "delete" -> {
+                        articles.removeIf { it.id == id }
+                        call.respondRedirect("/articles")
+                    }
+                }
+            }
 
         }
 

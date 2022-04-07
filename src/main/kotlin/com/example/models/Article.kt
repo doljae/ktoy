@@ -11,6 +11,11 @@ data class Article(val id: Int, val title: String, val body: String) {
     }
 }
 
+val articles = mutableListOf(Article.newEntry(
+    "The drive to develop!",
+    "...it's what keeps me going."
+))
+
 object Articles : Table() {
     val id = integer("id").autoIncrement()
     val title = varchar("title", 128)

@@ -1,6 +1,8 @@
 package com.example.plugins
 
 import com.example.dao.dao
+import com.example.models.Article
+import com.example.models.articles
 import com.example.routes.customerRouting
 import com.example.routes.getOrdersRoute
 import com.example.routes.listOrdersRoute
@@ -25,8 +27,24 @@ fun Application.configureRouting() {
         }
         route("articles") {
             get {
-                call.respond(FreeMarkerContent("index.ftl",null))
+                call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
             }
+            get("new") {
+                call.respond(FreeMarkerContent("new.ftl", model = null))
+            }
+            post {
+                val formParameters = call.receiveParameters()
+                val title = formParameters.getOrFail("title")
+                val body = formParameters.getOrFail("body")
+                val newEntry = Article.newEntry(title, body)
+                articles.add(newEntry)
+                call.respondRedirect("/articles/${newEntry.id}")
+            }
+            get("{id}") {
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                call.respond(FreeMarkerContent("show.ftl", mapOf("article" to articles.find { it.id == id })))
+            }
+
         }
 
 
